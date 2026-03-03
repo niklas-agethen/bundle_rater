@@ -23,57 +23,80 @@ body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; disp
     line-height: 1.4;
     text-align: left;
 }
-.info-box b {
-    font-weight: bold;
-}
-.cst-container {
-    position: relative;
-    display: inline-block;
-}
-
-.cover {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
-    pointer-events: none;
-}
-
-.af-image-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.af-cover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
-    pointer-events: none;
-}
-
-.af-hidden {
-    display: none;
-}
-
+.cst-container { position: relative; display: inline-block; }
+.cover { position: absolute; top: 0; width: 50%; height: 100%; background: rgba(0,0,0,0.45); pointer-events: none; }
+.af-image-wrapper { position: relative; display: inline-block; }
+.af-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); pointer-events: none; }
+.af-hidden { display: none; }
 .cover.left { left: 0; }
 .cover.right { right: 0; }
-
 .hidden { display: none; }
+
+.rating-area {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 30px 0;
+    width: 100%;
+}
+
+.spacer {
+    width: 320px;   /* same width as rating-info */
+}
+
+.button-block {
+    text-align: center;
+    margin: 0 40px;
+}
+
+.rating-buttons button {
+    font-size: 22px;
+    padding: 10px 18px;
+    margin: 0 6px;
+}
+
+.control-buttons {
+    margin-top: 12px;
+}
+
+.control-buttons button {
+    margin: 0 6px;
+}
+
+.rating-info {
+    width: 320px;
+    min-height: 160px;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    padding: 12px 16px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.current-question {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 10px 0 20px 0;
+    text-align: center;
+    max-width: 900px;
+}
 </style>
 </head>
 <body>
 <div class="info-box">
   <b>Streamline Bundle Rater: How to use this tool</b><br><br>
-  • Rate the displayed bundles from 0 (not usable) to 4 (highest clinical relevance).<br>
-  • Provide two rates per screen.<br>
+  • Rate the displayed bundle with regards to:<br>
+    1. How clinically plausible is this streamline bundle?<br>
+    2. How clean is the bundle from anatomically implausible or spurious streamlines?<br>
+    3. How complete is the bundle with respect to relevant anatomical streamlines?"<br>
+  • Rate from 1 (worst) to 4 (best)<br>
+  • Provide three rates per bundle (6 rates per screen).<br>
   • For AF images: left image = first rating, right image = second rating.<br>
   • For CST/OR images: both ratings apply to the same image (rate from visual left to right).<br>
   • Current image and rating index are displayed above the rating buttons.<br>
-  • Use number keys <b>0–4</b> for fast rating.<br>
+  • Use number keys <b>1–4</b> for fast rating.<br>
   • <b>Skip</b> if no clear rating possible.<br>
   • <b>Back</b> lets you revise previous ratings (previous rating will be deleted).<br>
   • Next images are loaded automatically.<br>
@@ -677,7 +700,7 @@ body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; disp
     
     <div class="slide cst-slide">
         <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_Tom_trackings_OR.png" alt="UCSF-PDGM-0069_Tom_trackings_OR.png">
+            <img src="images/UCSF-PDGM-0069_TOM_trackings_OR.png" alt="UCSF-PDGM-0069_TOM_trackings_OR.png">
             <div class="cover left"></div>
             <div class="cover right"></div>
         </div>
@@ -757,7 +780,7 @@ body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; disp
     
     <div class="slide cst-slide">
         <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_Tom_trackings_OR.png" alt="UCSF-PDGM-0194_Tom_trackings_OR.png">
+            <img src="images/UCSF-PDGM-0194_TOM_trackings_OR.png" alt="UCSF-PDGM-0194_TOM_trackings_OR.png">
             <div class="cover left"></div>
             <div class="cover right"></div>
         </div>
@@ -1077,7 +1100,7 @@ body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; disp
     
     <div class="slide cst-slide">
         <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_Tom_trackings_OR.png" alt="UCSF-PDGM-0372_Tom_trackings_OR.png">
+            <img src="images/UCSF-PDGM-0372_TOM_trackings_OR.png" alt="UCSF-PDGM-0372_TOM_trackings_OR.png">
             <div class="cover left"></div>
             <div class="cover right"></div>
         </div>
@@ -1157,7 +1180,7 @@ body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; disp
     
     <div class="slide cst-slide">
         <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_Tom_trackings_OR.png" alt="UCSF-PDGM-0375_Tom_trackings_OR.png">
+            <img src="images/UCSF-PDGM-0375_TOM_trackings_OR.png" alt="UCSF-PDGM-0375_TOM_trackings_OR.png">
             <div class="cover left"></div>
             <div class="cover right"></div>
         </div>
@@ -1237,7 +1260,7 @@ body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; disp
     
     <div class="slide cst-slide">
         <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_Tom_trackings_OR.png" alt="UCSF-PDGM-0385_Tom_trackings_OR.png">
+            <img src="images/UCSF-PDGM-0385_TOM_trackings_OR.png" alt="UCSF-PDGM-0385_TOM_trackings_OR.png">
             <div class="cover left"></div>
             <div class="cover right"></div>
         </div>
@@ -1437,181 +1460,178 @@ body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; disp
     
 </div>
 <div class="progress" id="progress"></div>
-<div class="buttons">
-  <button onclick="inputRating(0)">0</button>
-  <button onclick="inputRating(1)">1</button>
-  <button onclick="inputRating(2)">2</button>
-  <button onclick="inputRating(3)">3</button>
-  <button onclick="inputRating(4)">4</button>
-</div>
-
-<div class="buttons">
-  <button onclick="goBack()">Back</button>
-  <button onclick="skip()">Skip</button>
-  <button onclick="startOver()">Start over</button>
-  <button onclick="exportRatings(false)">Download ratings</button>
+<div id="currentQuestion" class="current-question"></div>
+<div class="rating-area">
+  <div class="spacer"></div>
+  <div class="button-block">
+    <div class="buttons rating-buttons">
+      <button onclick="inputRating(1)">1</button>
+      <button onclick="inputRating(2)">2</button>
+      <button onclick="inputRating(3)">3</button>
+      <button onclick="inputRating(4)">4</button>
+    </div>
+    <div class="buttons control-buttons">
+      <button onclick="goBack()">Back</button>
+      <button onclick="skip()">Skip</button>
+      <button onclick="startOver()">Start over</button>
+      <button onclick="exportRatings(false)">Download interim ratings</button>
+    </div>
+  </div>
+  <div class="rating-info" id="ratingInfo"></div>
 </div>
 
 <script>
-// ---------- INIT ----------
 var slides = document.querySelectorAll('.slide');
 var totalSlides = slides.length;
 
-var ratings = JSON.parse(localStorage.getItem("ratings")) || new Array(totalSlides).fill(null).map(function(){ return { first: null, second: null }; });
+var ratings = JSON.parse(localStorage.getItem("ratings")) || new Array(totalSlides).fill(null).map(function(){ 
+    return { 
+        left: {clinical:null,falsePos:null,missingTP:null}, 
+        right:{clinical:null,falsePos:null,missingTP:null} 
+    }; 
+});
 
-// Ensure order is valid
 var order = JSON.parse(localStorage.getItem("order"));
-if(!order || order.length !== totalSlides){
+if(!order || order.length!==totalSlides){
     order = [];
     for(var i=0;i<totalSlides;i++) order.push(i);
     shuffle(order);
-    localStorage.setItem("order", JSON.stringify(order));
 }
 
-var currentSlide = parseInt(localStorage.getItem("currentSlide") || "0", 10);
-var step = parseInt(localStorage.getItem("step") || "0", 10);
+var currentSlide = parseInt(localStorage.getItem("currentSlide") || "0");
+var step = parseInt(localStorage.getItem("step") || "0"); // 0-5 for 6 ratings per slide
 
-// ---------- HELPERS ----------
-function shuffle(array){
-    for(var i=array.length-1;i>0;i--){
-        var j=Math.floor(Math.random()*(i+1));
-        var temp=array[i]; array[i]=array[j]; array[j]=temp;
-    }
-}
-function saveState(){
-    localStorage.setItem("ratings", JSON.stringify(ratings));
-    localStorage.setItem("currentSlide", currentSlide);
-    localStorage.setItem("order", JSON.stringify(order));
-    localStorage.setItem("step", step);
-}
+function shuffle(array){ for(var i=array.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=array[i]; array[i]=array[j]; array[j]=tmp; } }
+function saveState(){ localStorage.setItem("ratings",JSON.stringify(ratings)); localStorage.setItem("currentSlide",currentSlide); localStorage.setItem("order",JSON.stringify(order)); localStorage.setItem("step",step); }
+
 function showSlide(index){
     for(var i=0;i<slides.length;i++) slides[i].classList.remove("active");
     slides[order[index]].classList.add("active");
 
-    // ----- CST/OR overlay logic -----
     var slide = slides[order[index]];
-    var isCST = slide.classList.contains("cst-slide");
+
+    // CST overlay
     var leftCover = slide.querySelector(".cover.left");
     var rightCover = slide.querySelector(".cover.right");
-
-    if(isCST && leftCover && rightCover){
-        if(step === 0){
-            // first rating → right half blocked
-            leftCover.classList.add("hidden");
-            rightCover.classList.remove("hidden");
-        } else {
-            // second rating → left half blocked
-            leftCover.classList.remove("hidden");
-            rightCover.classList.add("hidden");
-        }
+    if(leftCover && rightCover){
+        if(step<3){ leftCover.classList.add("hidden"); rightCover.classList.remove("hidden"); }
+        else { leftCover.classList.remove("hidden"); rightCover.classList.add("hidden"); }
     }
 
-    // ----- AF overlay logic -----
-    var isAF = slide.classList.contains("af-slide");
-    if(isAF){
-        var wrappers = slide.querySelectorAll(".af-image-wrapper");
-        if(wrappers.length === 2){
-            var leftCover  = wrappers[0].querySelector(".af-cover");
-            var rightCover = wrappers[1].querySelector(".af-cover");
-
-            if(step === 0){
-                // first rating → right image blocked
-                leftCover.classList.add("af-hidden");
-                rightCover.classList.remove("af-hidden");
-            } else {
-                // second rating → left image blocked
-                leftCover.classList.remove("af-hidden");
-                rightCover.classList.add("af-hidden");
-            }
-        }
+    // AF overlay
+    var wrappers = slide.querySelectorAll(".af-image-wrapper");
+    if(wrappers.length===2){
+        var lc = wrappers[0].querySelector(".af-cover");
+        var rc = wrappers[1].querySelector(".af-cover");
+        if(step<3){ lc.classList.add("af-hidden"); rc.classList.remove("af-hidden"); }
+        else { lc.classList.remove("af-hidden"); rc.classList.add("af-hidden"); }
     }
 
     var r = ratings[order[index]];
-    var label = (step===0) ? (r.first===null ? "not rated" : (r.first===-1 ? "skipped" : r.first)) 
-                            : (r.second===null ? "not rated" : (r.second===-1 ? "skipped" : r.second));
+    var region = (step<3)?"left":"right";
+    var metricNames = ["How clinically plausible is this streamline bundle?", "How clean is the bundle from anatomically implausible or spurious streamlines?","How complete is the bundle with respect to relevant anatomical streamlines?"];
+    var metric = metricNames[step%3];
 
-    document.getElementById("progress").textContent = "Image "+(index+1)+" / "+totalSlides+" — Rating "+(step+1)+" of 2";
+    document.getElementById("progress").textContent = "Screen "+(index+1)+" / "+totalSlides+" — "+region+" (Rating "+(step+1)+" of 6)";
+    updateRatingInfo();
+    updateCurrentQuestion();
     saveState();
 }
 
-// ---------- NAVIGATION ----------
 function inputRating(value){
     var idx = order[currentSlide];
-    if(step===0) ratings[idx].first = value;
-    else ratings[idx].second = value;
+    var region = (step<3)?"left":"right";
+    var metricNames = ["clinical","falsePos","missingTP"];
+    var metric = metricNames[step%3];
+    ratings[idx][region][metric]=value;
 
-    if(step===0){
-        step = 1; 
-        showSlide(currentSlide);
-    } else {
-        step = 0;
-        if(currentSlide < totalSlides - 1){
-            currentSlide++;
-            showSlide(currentSlide);
-        } else {
-            saveState();
-            exportRatings(true);
-            alert("Thank you! Ratings downloaded.");
-        }
-    }
+    if(step<5) step++; else { step=0; if(currentSlide<totalSlides-1) currentSlide++; else { saveState(); exportRatings(true); alert("Done! Ratings downloaded."); return; } }
     saveState();
-}
-
-function skip(){
-    var idx = order[currentSlide];
-    if(step===0) ratings[idx].first = -1;
-    else ratings[idx].second = -1;
-
-    if(step===0){
-        step = 1;
-        showSlide(currentSlide);
-    } else {
-        step = 0;
-        if(currentSlide < totalSlides - 1){
-            currentSlide++;
-            showSlide(currentSlide);
-        } else {
-            saveState();
-            exportRatings(true);
-            alert("Thank you! Ratings downloaded.");
-        }
-    }
-    saveState();
-}
-
-function goBack(){
-    if(step===1){ step = 0; }
-    else if(currentSlide > 0){ currentSlide--; step = 1; }
     showSlide(currentSlide);
 }
 
-function startOver(){
-    if(!confirm("This will erase all ratings and start from the beginning. Continue?")) return;
-    ratings = new Array(totalSlides).fill(null).map(function(){ return { first:null, second:null }; });
-    shuffle(order); currentSlide=0; step=0; saveState(); showSlide(currentSlide);
-}
+function skip(){ inputRating(-1); }
+
+function goBack(){ if(step>0) step--; else if(currentSlide>0){ currentSlide--; step=5; } showSlide(currentSlide); }
+
+function startOver(){ if(!confirm("Erase all ratings?")) return; ratings = new Array(totalSlides).fill(null).map(function(){ return { left:{clinical:null,falsePos:null,missingTP:null}, right:{clinical:null,falsePos:null,missingTP:null} }; }); shuffle(order); currentSlide=0; step=0; saveState(); showSlide(currentSlide); }
 
 function exportRatings(isFinal=true){
-    var csv="Image1,Image2,Rating1,Rating2\n";
+    var csv="Image1,Image2,Left_Clinical,Left_FalsePos,Left_MissingTP,Right_Clinical,Right_FalsePos,Right_MissingTP\n";
     for(var i=0;i<totalSlides;i++){
         var slide=slides[i];
         var imgs=slide.querySelectorAll("img");
         var img1=imgs[0]?imgs[0].getAttribute("src").split("/").pop():"";
         var img2=imgs[1]?imgs[1].getAttribute("src").split("/").pop():"";
         var r=ratings[i];
-        csv+=img1+","+img2+","+(r.first!==null?r.first:"")+","+(r.second!==null?r.second:"")+"\n";
+        csv+=img1+","+img2+","+r.left.clinical+","+r.left.falsePos+","+r.left.missingTP+","
+        +r.right.clinical+","+r.right.falsePos+","+r.right.missingTP+"\n";
     }
     var blob=new Blob([csv],{type:"text/csv"});
     var link=document.createElement("a");
     link.href=URL.createObjectURL(blob);
-    link.download = isFinal ? "ratings_final.csv" : "ratings_interim.csv";
+    link.download = isFinal?"ratings_final.csv":"ratings_interim.csv";
     link.click();
 }
 
-// ---------- KEYBOARD ----------
-document.addEventListener("keydown",function(e){ if(e.key>="0" && e.key<="4") inputRating(parseInt(e.key,10)); });
+document.addEventListener("keydown",function(e){ 
+    if(e.key>="1" && e.key<="4") inputRating(parseInt(e.key,10));
+    if(e.key==="Backspace") goBack();
+});
 
-// ---------- INITIAL ----------
+function updateRatingInfo(){
+
+    var metricIndex = step % 3;
+    var infoBox = document.getElementById("ratingInfo");
+
+    if(metricIndex === 0){
+        infoBox.innerHTML = "<b>Clinical Plausibility</b><br><br><br>"
+        + "1 = Not clinically plausible<br>"
+        + "2 = Poor<br>"
+        + "3 = Good<br>"
+        + "4 = Highly clinically plausible";
+    }
+
+    if(metricIndex === 1){
+        infoBox.innerHTML = "<b>Anatomical Cleanliness</b><br>"
+        + "(False Positive Streamlines)<br><br>"
+        + "1 = Many disruptive false fibers<br>"
+        + "2 = Several disruptive false fibers<br>"
+        + "3 = Few disruptive false fibers<br>"
+        + "4 = No or almost no false fibers";
+    }
+
+    if(metricIndex === 2){
+        infoBox.innerHTML = "<b>Anatomical Completeness</b><br>"
+        + "(False Negative Streamlines)<br><br>"
+        + "1 = Many important streamlines missing<br>"
+        + "2 = Some important streamlines missing<br>"
+        + "3 = Mostly complete<br>"
+        + "4 = Complete anatomical representation";
+    }
+}
+
+function updateCurrentQuestion(){
+
+    var metricIndex = step % 3;
+    var questionBox = document.getElementById("currentQuestion");
+
+    if(metricIndex === 0){
+        questionBox.textContent =
+        "How clinically plausible is this streamline bundle?";
+    }
+
+    if(metricIndex === 1){
+        questionBox.textContent =
+        "How clean is the bundle from anatomically implausible or spurious streamlines?";
+    }
+
+    if(metricIndex === 2){
+        questionBox.textContent =
+        "How complete is the bundle with respect to relevant anatomical streamlines?";
+    }
+}
+
 showSlide(currentSlide);
 
 </script>
