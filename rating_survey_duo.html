@@ -152,7 +152,7 @@ Rate each bundle regarding:<br>
 2. Anatomical cleanliness (false positives)<br>
 3. Anatomical completeness (false negatives)<br><br>
 
-Rate from <b>1 (worst)</b> to <b>4 (best)</b>.<br>
+Rate from <b>1 (best)</b> to <b>5 (worst)</b>.<br>
 
 Each screen requires <b>6 ratings</b>:
 3 for the left bundle and 3 for the right bundle.<br><br>
@@ -876,6 +876,7 @@ Each screen requires <b>6 ratings</b>:
 <button onclick="setRating('clinical',2)">2</button>
 <button onclick="setRating('clinical',3)">3</button>
 <button onclick="setRating('clinical',4)">4</button>
+<button onclick="setRating('clinical',5)">5</button>
 <button onclick="setRating('clinical',-1)">N/A</button>
 </div>
 
@@ -885,6 +886,7 @@ Each screen requires <b>6 ratings</b>:
 <button onclick="setRating('falsePos',2)">2</button>
 <button onclick="setRating('falsePos',3)">3</button>
 <button onclick="setRating('falsePos',4)">4</button>
+<button onclick="setRating('falsePos',5)">5</button>
 <button onclick="setRating('falsePos',-1)">N/A</button>
 </div>
 
@@ -894,6 +896,7 @@ Each screen requires <b>6 ratings</b>:
 <button onclick="setRating('missingTP',2)">2</button>
 <button onclick="setRating('missingTP',3)">3</button>
 <button onclick="setRating('missingTP',4)">4</button>
+<button onclick="setRating('missingTP',5)">5</button>
 <button onclick="setRating('missingTP',-1)">N/A</button>
 </div>
 
@@ -1129,22 +1132,16 @@ function updateInfo(){
 
 document.getElementById("ratingInfo").innerHTML=
 "<b>Clinical plausibility</b><br>"+
-"1 = Not plausible<br>"+
-"2 = Poor<br>"+
-"3 = Good<br>"+
-"4 = Excellent<br><br>"+
+"1 = Excellent / fully plausible<br>"+
+"5 = Not plausible<br><br>"+
 
 "<b>Anatomical cleanliness</b><br>"+
-"1 = Many false fibers<br>"+
-"2 = Several false fibers<br>"+
-"3 = Few false fibers<br>"+
-"4 = Clean bundle<br><br>"+
+"1 = Clean bundle<br>"+
+"5 = Noisy bundle<br><br>"+
 
 "<b>Anatomical completeness</b><br>"+
-"1 = Many streamlines missing<br>"+
-"2 = Some missing<br>"+
-"3 = Mostly complete<br>"+
-"4 = Complete anatomy";
+"1 = Complete bundle<br>"+
+"5 = Severely incomplete bundle";
 
 }
 
