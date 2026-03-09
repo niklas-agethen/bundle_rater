@@ -3,1637 +3,1154 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Image Rating Survey</title>
+<title>Streamline Bundle Rating</title>
+
 <style>
-body { margin:0; font-family:Arial,sans-serif; background:#111; color:#fff; display:flex; flex-direction:column; align-items:center; }
-.slide { display:none; width:100%; justify-content:center; align-items:center; }
-.slide.active { display:flex; }
-.slide img { max-height:70vh; max-width:45vw; object-fit:contain; margin:0 10px; }
-.buttons { margin:10px 0; }
-.buttons button { font-size:24px; padding:10px 20px; margin:0 5px; cursor:pointer; }
-.progress { font-size:16px; opacity:0.85; margin:10px 0; }
-.info-box {
-    margin: 15px 20px 25px;
-    background: rgba(255,255,255,0.9);
-    color: #000;
-    padding: 12px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    max-width: 900px;
-    line-height: 1.4;
-    text-align: left;
-}
-.cst-container { position: relative; display: inline-block; }
-.cover { position: absolute; top: 0; width: 50%; height: 100%; background: rgba(0,0,0,0.45); pointer-events: none; }
-.af-image-wrapper { position: relative; display: inline-block; }
-.af-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); pointer-events: none; }
-.af-hidden { display: none; }
-.cover.left { left: 0; }
-.cover.right { right: 0; }
-.hidden { display: none; }
 
-.rating-area {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 30px 0;
-    width: 100%;
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#111;
+color:#fff;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
-.spacer {
-    width: 320px;   /* same width as rating-info */
+.slide{
+display:none;
+width:100%;
+justify-content:center;
+align-items:center;
 }
 
-.button-block {
-    text-align: center;
-    margin: 0 40px;
+.slide.active{
+display:flex;
 }
 
-.rating-buttons button {
-    font-size: 22px;
-    padding: 10px 18px;
-    margin: 0 6px;
+.slide img{
+max-height:70vh;
+max-width:45vw;
+object-fit:contain;
+margin:0 10px;
 }
 
-.control-buttons {
-    margin-top: 12px;
+.info-box{
+margin:15px 20px 25px;
+background:rgba(255,255,255,0.9);
+color:#000;
+padding:12px 16px;
+border-radius:6px;
+font-size:14px;
+max-width:900px;
+line-height:1.4;
 }
 
-.control-buttons button {
-    margin: 0 6px;
+.progress{
+font-size:16px;
+margin:10px 0;
 }
 
-.rating-info {
-    width: 320px;
-    min-height: 160px;
-    background: rgba(255,255,255,0.9);
-    color: #000;
-    padding: 12px 16px;
-    border-radius: 6px;
-    box-sizing: border-box;
-    text-align: left;
-    line-height: 1.4;
+.rating-area{
+display:flex;
+justify-content:center;
+align-items:flex-start;
+margin:25px 0;
+width:100%;
 }
 
-.current-question {
-    font-size: 22px;
-    font-weight: bold;
-    margin: 10px 0 20px 0;
-    text-align: center;
-    max-width: 900px;
+.spacer{
+width:320px;
 }
+
+.button-block{
+text-align:center;
+margin:0 40px;
+}
+
+.rating-row{
+margin:12px 0;
+}
+
+.rating-row button{
+font-size:20px;
+padding:8px 14px;
+margin:4px;
+cursor:pointer;
+}
+
+.control-buttons{
+margin-top:15px;
+}
+
+.control-buttons button{
+margin:4px;
+padding:8px 12px;
+}
+
+.rating-info{
+width:320px;
+min-height:160px;
+background:rgba(255,255,255,0.9);
+color:#000;
+padding:12px 16px;
+border-radius:6px;
+box-sizing:border-box;
+line-height:1.4;
+}
+
+.cst-container{
+position:relative;
+display:inline-block;
+}
+
+.cover{
+position:absolute;
+top:0;
+width:50%;
+height:100%;
+background:rgba(0,0,0,0.45);
+pointer-events:none;
+}
+
+.cover.left{left:0;}
+.cover.right{right:0;}
+
+.af-image-wrapper{
+position:relative;
+display:inline-block;
+}
+
+.af-cover{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+pointer-events:none;
+}
+
+.rating-row button.selected{
+background:#1e88e5;
+color:white;
+}
+
+.hidden{display:none;}
+.af-hidden{display:none;}
+
 </style>
 </head>
+
 <body>
+
 <div class="info-box">
-  <b>Streamline Bundle Rater: How to use this tool</b><br><br>
-  • Rate the displayed bundle with regards to:<br>
-    1. How clinically plausible is this streamline bundle?<br>
-    2. How clean is the bundle from anatomically implausible or spurious streamlines?<br>
-    3. How complete is the bundle with respect to relevant anatomical streamlines?"<br>
-  • Rate from 1 (worst) to 4 (best)<br>
-  • Provide three rates per bundle (6 rates per screen).<br>
-  • For AF images: left image = first rating, right image = second rating.<br>
-  • For CST/OR images: both ratings apply to the same image (rate from visual left to right).<br>
-  • Current image and rating index are displayed above the rating buttons.<br>
-  • Use number keys <b>1–4</b> for fast rating.<br>
-  • <b>Skip</b> if no clear rating possible.<br>
-  • <b>Back</b> lets you revise previous ratings (previous rating will be deleted).<br>
-  • Next images are loaded automatically.<br>
-  • Progress is saved automatically.<br>
-  • <b>Download ratings</b> to download interim results at any time.<br>
-  • Your final results will be downloaded automatically.<br>
-  • <b>Start over</b> resets all ratings and starts a new run with random order of images.<br>
+<b>Streamline Bundle Rater</b><br><br>
+
+Rate each bundle regarding:<br>
+1. Clinical plausibility<br>
+2. Anatomical cleanliness (false positives)<br>
+3. Anatomical completeness (false negatives)<br><br>
+
+Rate from <b>1 (worst)</b> to <b>4 (best)</b>.<br>
+
+Each screen requires <b>6 ratings</b>:
+3 for the left bundle and 3 for the right bundle.<br><br>
 </div>
 
 <div id="slidesContainer">
 
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0069_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0194_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0291_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0312_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0361_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0372_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0375_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0385_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0449_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_FOD_iFOD2_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_FOD_iFOD2_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_Peaks_FACT_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_Peaks_FACT_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_TOM_trackings_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_TOM_trackings_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_v1.6.5_01_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_v1.6.5_01_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide af-slide">
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_v1.7.1_02_00_AF_left.png" alt="AF left">
-            <div class="af-cover"></div>
-        </div>
-        <div class="af-image-wrapper">
-            <img src="images/UCSF-PDGM-0465_v1.7.1_02_00_AF_right.png" alt="AF right">
-            <div class="af-cover"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0069_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0069_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0069_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0069_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_TOM_trackings_CST.png" alt="UCSF-PDGM-0069_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_TOM_trackings_OR.png" alt="UCSF-PDGM-0069_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0069_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0069_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0069_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0069_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0069_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0194_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0194_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0194_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0194_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_TOM_trackings_CST.png" alt="UCSF-PDGM-0194_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_TOM_trackings_OR.png" alt="UCSF-PDGM-0194_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0194_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0194_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0194_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0194_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0194_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0291_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0291_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0291_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0291_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_TOM_trackings_CST.png" alt="UCSF-PDGM-0291_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_TOM_trackings_OR.png" alt="UCSF-PDGM-0291_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0291_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0291_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0291_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0291_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0291_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0312_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0312_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0312_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0312_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_TOM_trackings_CST.png" alt="UCSF-PDGM-0312_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_TOM_trackings_OR.png" alt="UCSF-PDGM-0312_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0312_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0312_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0312_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0312_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0312_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0361_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0361_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0361_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0361_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_TOM_trackings_CST.png" alt="UCSF-PDGM-0361_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_TOM_trackings_OR.png" alt="UCSF-PDGM-0361_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0361_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0361_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0361_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0361_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0361_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0372_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0372_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0372_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0372_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_TOM_trackings_CST.png" alt="UCSF-PDGM-0372_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_TOM_trackings_OR.png" alt="UCSF-PDGM-0372_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0372_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0372_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0372_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0372_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0372_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0375_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0375_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0375_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0375_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_TOM_trackings_CST.png" alt="UCSF-PDGM-0375_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_TOM_trackings_OR.png" alt="UCSF-PDGM-0375_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0375_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0375_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0375_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0375_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0375_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0385_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0385_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0385_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0385_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_TOM_trackings_CST.png" alt="UCSF-PDGM-0385_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_TOM_trackings_OR.png" alt="UCSF-PDGM-0385_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0385_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0385_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0385_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0385_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0385_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0449_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0449_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0449_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0449_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_TOM_trackings_CST.png" alt="UCSF-PDGM-0449_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_TOM_trackings_OR.png" alt="UCSF-PDGM-0449_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0449_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0449_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0449_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0449_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0449_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_FOD_iFOD2_trackings_CST.png" alt="UCSF-PDGM-0465_FOD_iFOD2_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_FOD_iFOD2_trackings_OR.png" alt="UCSF-PDGM-0465_FOD_iFOD2_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_Peaks_FACT_trackings_CST.png" alt="UCSF-PDGM-0465_Peaks_FACT_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_Peaks_FACT_trackings_OR.png" alt="UCSF-PDGM-0465_Peaks_FACT_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_TOM_trackings_CST.png" alt="UCSF-PDGM-0465_TOM_trackings_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_TOM_trackings_OR.png" alt="UCSF-PDGM-0465_TOM_trackings_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_v1.6.5_01_00_CST.png" alt="UCSF-PDGM-0465_v1.6.5_01_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_v1.7.1_02_00_CST.png" alt="UCSF-PDGM-0465_v1.7.1_02_00_CST.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_v1.7.1_02_03_OR.png" alt="UCSF-PDGM-0465_v1.7.1_02_03_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
-    <div class="slide cst-slide">
-        <div class="cst-container">
-            <img src="images/UCSF-PDGM-0465_v1.7.1_02_04_OR.png" alt="UCSF-PDGM-0465_v1.7.1_02_04_OR.png">
-            <div class="cover left"></div>
-            <div class="cover right"></div>
-        </div>
-    </div>
-    
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
 </div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0069_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0194_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0291_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0312_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0361_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0372_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0375_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0385_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0449_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_FOD_iFOD2_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_FOD_iFOD2_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_Peaks_FACT_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_Peaks_FACT_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_TOM_trackings_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_TOM_trackings_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_v1.6.5_01_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_v1.6.5_01_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+<div class="slide af-slide">
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_v1.7.1_02_00_AF_left.png">
+<div class="af-cover"></div>
+</div>
+
+<div class="af-image-wrapper">
+<img src="images/UCSF-PDGM-0465_v1.7.1_02_00_AF_right.png">
+<div class="af-cover"></div>
+</div>
+
+</div>
+
+</div>
+
 <div class="progress" id="progress"></div>
-<div id="currentQuestion" class="current-question"></div>
+
 <div class="rating-area">
-  <div class="spacer"></div>
-  <div class="button-block">
-    <div class="buttons rating-buttons">
-      <button onclick="inputRating(1)">1</button>
-      <button onclick="inputRating(2)">2</button>
-      <button onclick="inputRating(3)">3</button>
-      <button onclick="inputRating(4)">4</button>
-    </div>
-    <div class="buttons control-buttons">
-      <button onclick="goBack()">Back</button>
-      <button onclick="skip()">Skip</button>
-      <button onclick="startOver()">Start over</button>
-      <button onclick="exportRatings(false)">Download interim ratings</button>
-    </div>
-  </div>
-  <div class="rating-info" id="ratingInfo"></div>
+
+<div class="spacer"></div>
+
+<div class="button-block">
+
+<div class="rating-row">
+<b>Clinical plausibility</b><br>
+<button onclick="setRating('clinical',1)">1</button>
+<button onclick="setRating('clinical',2)">2</button>
+<button onclick="setRating('clinical',3)">3</button>
+<button onclick="setRating('clinical',4)">4</button>
+<button onclick="setRating('clinical',-1)">N/A</button>
+</div>
+
+<div class="rating-row">
+<b>Anatomical cleanliness (false positives)</b><br>
+<button onclick="setRating('falsePos',1)">1</button>
+<button onclick="setRating('falsePos',2)">2</button>
+<button onclick="setRating('falsePos',3)">3</button>
+<button onclick="setRating('falsePos',4)">4</button>
+<button onclick="setRating('falsePos',-1)">N/A</button>
+</div>
+
+<div class="rating-row">
+<b>Anatomical completeness (false negatives)</b><br>
+<button onclick="setRating('missingTP',1)">1</button>
+<button onclick="setRating('missingTP',2)">2</button>
+<button onclick="setRating('missingTP',3)">3</button>
+<button onclick="setRating('missingTP',4)">4</button>
+<button onclick="setRating('missingTP',-1)">N/A</button>
+</div>
+
+<div class="control-buttons">
+<button onclick="goBack()">Back</button>
+<button onclick="startOver()">Start over</button>
+<button onclick="exportRatings(false)">Download interim ratings</button>
+</div>
+
+</div>
+
+<div class="rating-info" id="ratingInfo"></div>
+
 </div>
 
 <script>
-var slides = document.querySelectorAll('.slide');
-var totalSlides = slides.length;
 
-var ratings = JSON.parse(localStorage.getItem("ratings")) || new Array(totalSlides).fill(null).map(function(){ 
-    return { 
-        left: {clinical:null,falsePos:null,missingTP:null}, 
-        right:{clinical:null,falsePos:null,missingTP:null} 
-    }; 
-});
+var slides=document.querySelectorAll('.slide');
+var totalSlides=slides.length;
 
-var order = JSON.parse(localStorage.getItem("order"));
-if(!order || order.length!==totalSlides){
-    order = [];
-    for(var i=0;i<totalSlides;i++) order.push(i);
-    shuffle(order);
+var ratings=JSON.parse(localStorage.getItem("ratings"))||
+new Array(totalSlides).fill(null).map(()=>({
+left:{clinical:null,falsePos:null,missingTP:null},
+right:{clinical:null,falsePos:null,missingTP:null}
+}));
+
+var order=JSON.parse(localStorage.getItem("order"));
+
+if(!order||order.length!==totalSlides){
+order=[];
+for(var i=0;i<totalSlides;i++)order.push(i);
+shuffle(order);
 }
 
-var currentSlide = parseInt(localStorage.getItem("currentSlide") || "0");
-var step = parseInt(localStorage.getItem("step") || "0"); // 0-5 for 6 ratings per slide
+var currentSlide=parseInt(localStorage.getItem("currentSlide")||"0");
+var activeRegion="left";
 
-function shuffle(array){ for(var i=array.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=array[i]; array[i]=array[j]; array[j]=tmp; } }
-function saveState(){ localStorage.setItem("ratings",JSON.stringify(ratings)); localStorage.setItem("currentSlide",currentSlide); localStorage.setItem("order",JSON.stringify(order)); localStorage.setItem("step",step); }
+function shuffle(array){
+for(var i=array.length-1;i>0;i--){
+var j=Math.floor(Math.random()*(i+1));
+[array[i],array[j]]=[array[j],array[i]];
+}
+}
+
+function saveState(){
+localStorage.setItem("ratings",JSON.stringify(ratings));
+localStorage.setItem("currentSlide",currentSlide);
+localStorage.setItem("order",JSON.stringify(order));
+}
 
 function showSlide(index){
-    for(var i=0;i<slides.length;i++) slides[i].classList.remove("active");
-    slides[order[index]].classList.add("active");
 
-    var slide = slides[order[index]];
+slides.forEach(s=>s.classList.remove("active"));
+slides[order[index]].classList.add("active");
 
-    // CST overlay
-    var leftCover = slide.querySelector(".cover.left");
-    var rightCover = slide.querySelector(".cover.right");
-    if(leftCover && rightCover){
-        if(step<3){ leftCover.classList.add("hidden"); rightCover.classList.remove("hidden"); }
-        else { leftCover.classList.remove("hidden"); rightCover.classList.add("hidden"); }
-    }
+var slide=slides[order[index]];
 
-    // AF overlay
-    var wrappers = slide.querySelectorAll(".af-image-wrapper");
-    if(wrappers.length===2){
-        var lc = wrappers[0].querySelector(".af-cover");
-        var rc = wrappers[1].querySelector(".af-cover");
-        if(step<3){ lc.classList.add("af-hidden"); rc.classList.remove("af-hidden"); }
-        else { lc.classList.remove("af-hidden"); rc.classList.add("af-hidden"); }
-    }
+var leftCover=slide.querySelector(".cover.left");
+var rightCover=slide.querySelector(".cover.right");
 
-    var r = ratings[order[index]];
-    var region = (step<3)?"left":"right";
-    var metricNames = ["How clinically plausible is this streamline bundle?", "How clean is the bundle from anatomically implausible or spurious streamlines?","How complete is the bundle with respect to relevant anatomical streamlines?"];
-    var metric = metricNames[step%3];
+if(leftCover&&rightCover){
 
-    document.getElementById("progress").textContent = "Screen "+(index+1)+" / "+totalSlides+" — "+region+" (Rating "+(step+1)+" of 6)";
-    updateRatingInfo();
-    updateCurrentQuestion();
-    saveState();
+if(activeRegion==="left"){
+leftCover.classList.add("hidden");
+rightCover.classList.remove("hidden");
+}
+else{
+leftCover.classList.remove("hidden");
+rightCover.classList.add("hidden");
 }
 
-function inputRating(value){
-    var idx = order[currentSlide];
-    var region = (step<3)?"left":"right";
-    var metricNames = ["clinical","falsePos","missingTP"];
-    var metric = metricNames[step%3];
-    ratings[idx][region][metric]=value;
-
-    if(step<5) step++; else { step=0; if(currentSlide<totalSlides-1) currentSlide++; else { saveState(); exportRatings(true); alert("Done! Ratings downloaded."); return; } }
-    saveState();
-    showSlide(currentSlide);
 }
 
-function skip(){ inputRating(-1); }
+var wrappers=slide.querySelectorAll(".af-image-wrapper");
 
-function goBack(){ if(step>0) step--; else if(currentSlide>0){ currentSlide--; step=5; } showSlide(currentSlide); }
+if(wrappers.length===2){
 
-function startOver(){ if(!confirm("Erase all ratings?")) return; ratings = new Array(totalSlides).fill(null).map(function(){ return { left:{clinical:null,falsePos:null,missingTP:null}, right:{clinical:null,falsePos:null,missingTP:null} }; }); shuffle(order); currentSlide=0; step=0; saveState(); showSlide(currentSlide); }
+var lc=wrappers[0].querySelector(".af-cover");
+var rc=wrappers[1].querySelector(".af-cover");
 
-function exportRatings(isFinal=true){
-    var csv="Image1,Image2,Left_Clinical,Left_FalsePos,Left_MissingTP,Right_Clinical,Right_FalsePos,Right_MissingTP\n";
-    for(var i=0;i<totalSlides;i++){
-        var slide=slides[i];
-        var imgs=slide.querySelectorAll("img");
-        var img1=imgs[0]?imgs[0].getAttribute("src").split("/").pop():"";
-        var img2=imgs[1]?imgs[1].getAttribute("src").split("/").pop():"";
-        var r=ratings[i];
-        csv+=img1+","+img2+","+r.left.clinical+","+r.left.falsePos+","+r.left.missingTP+","
-        +r.right.clinical+","+r.right.falsePos+","+r.right.missingTP+"\n";
-    }
-    var blob=new Blob([csv],{type:"text/csv"});
-    var link=document.createElement("a");
-    link.href=URL.createObjectURL(blob);
-    link.download = isFinal?"ratings_final.csv":"ratings_interim.csv";
-    link.click();
+if(activeRegion==="left"){
+lc.classList.add("af-hidden");
+rc.classList.remove("af-hidden");
+}
+else{
+lc.classList.remove("af-hidden");
+rc.classList.add("af-hidden");
 }
 
-document.addEventListener("keydown",function(e){ 
-    if(e.key>="1" && e.key<="4") inputRating(parseInt(e.key,10));
-    if(e.key==="Backspace") goBack();
+}
+
+document.getElementById("progress").textContent=
+"Screen "+(index+1)+" / "+totalSlides+
+" — rating "+activeRegion+" bundle";
+
+updateInfo();
+updateButtonHighlight();
+
+}
+
+function setRating(metric,value){
+
+var idx=order[currentSlide];
+
+ratings[idx][activeRegion][metric]=value;
+
+updateButtonHighlight();
+
+checkFinished();
+
+saveState();
+
+}
+
+function updateButtonHighlight(){
+
+var idx=order[currentSlide];
+var r=ratings[idx][activeRegion];
+
+document.querySelectorAll(".rating-row").forEach(function(row){
+
+var metric=row.querySelector("button").getAttribute("onclick")
+.split("'")[1];
+
+row.querySelectorAll("button").forEach(function(btn){
+
+btn.classList.remove("selected");
+
+var value=btn.innerText==="N/A" ? -1 : parseInt(btn.innerText);
+
+if(r[metric]===value){
+btn.classList.add("selected");
+}
+
 });
 
-function updateRatingInfo(){
+});
 
-    var metricIndex = step % 3;
-    var infoBox = document.getElementById("ratingInfo");
-
-    if(metricIndex === 0){
-        infoBox.innerHTML = "<b>Clinical Plausibility</b><br><br><br>"
-        + "1 = Not clinically plausible<br>"
-        + "2 = Poor<br>"
-        + "3 = Good<br>"
-        + "4 = Highly clinically plausible";
-    }
-
-    if(metricIndex === 1){
-        infoBox.innerHTML = "<b>Anatomical Cleanliness</b><br>"
-        + "(False Positive Streamlines)<br><br>"
-        + "1 = Many disruptive false fibers<br>"
-        + "2 = Several disruptive false fibers<br>"
-        + "3 = Few disruptive false fibers<br>"
-        + "4 = No or almost no false fibers";
-    }
-
-    if(metricIndex === 2){
-        infoBox.innerHTML = "<b>Anatomical Completeness</b><br>"
-        + "(False Negative Streamlines)<br><br>"
-        + "1 = Many important streamlines missing<br>"
-        + "2 = Some important streamlines missing<br>"
-        + "3 = Mostly complete<br>"
-        + "4 = Complete anatomical representation";
-    }
 }
 
-function updateCurrentQuestion(){
+function checkFinished(){
 
-    var metricIndex = step % 3;
-    var questionBox = document.getElementById("currentQuestion");
+var idx=order[currentSlide];
+var r=ratings[idx];
 
-    if(metricIndex === 0){
-        questionBox.textContent =
-        "How clinically plausible is this streamline bundle?";
-    }
+function done(region){
+return r[region].clinical!=null &&
+r[region].falsePos!=null &&
+r[region].missingTP!=null;
+}
 
-    if(metricIndex === 1){
-        questionBox.textContent =
-        "How clean is the bundle from anatomically implausible or spurious streamlines?";
-    }
+if(activeRegion==="left"&&done("left")){
+activeRegion="right";
+showSlide(currentSlide);
+return;
+}
 
-    if(metricIndex === 2){
-        questionBox.textContent =
-        "How complete is the bundle with respect to relevant anatomical streamlines?";
-    }
+if(activeRegion==="right"&&done("right")){
+
+activeRegion="left";
+
+if(currentSlide<totalSlides-1){
+currentSlide++;
+showSlide(currentSlide);
+}
+else{
+exportRatings(true);
+alert("Survey finished.");
+}
+
+}
+
+}
+
+
+function goBack(){
+
+if(activeRegion==="right"){
+activeRegion="left";
+}
+else if(currentSlide>0){
+currentSlide--;
+activeRegion="right";
+}
+
+showSlide(currentSlide);
+
+}
+
+function startOver(){
+
+if(!confirm("Reset all ratings?"))return;
+
+localStorage.clear();
+location.reload();
+
+}
+
+function exportRatings(final=true){
+
+var csv="Image1,Image2,Left_Clinical,Left_FalsePos,Left_MissingTP,Right_Clinical,Right_FalsePos,Right_MissingTP\n";
+
+for(var i=0;i<totalSlides;i++){
+
+var slide=slides[i];
+var imgs=slide.querySelectorAll("img");
+
+var img1=imgs[0]?imgs[0].src.split("/").pop():"";
+var img2=imgs[1]?imgs[1].src.split("/").pop():"";
+
+var r=ratings[i];
+
+csv+=img1+","+img2+","+
+r.left.clinical+","+
+r.left.falsePos+","+
+r.left.missingTP+","+
+r.right.clinical+","+
+r.right.falsePos+","+
+r.right.missingTP+"\n";
+
+}
+
+var blob=new Blob([csv],{type:"text/csv"});
+var link=document.createElement("a");
+
+link.href=URL.createObjectURL(blob);
+link.download=final?"ratings_final.csv":"ratings_interim.csv";
+link.click();
+
+}
+
+function updateInfo(){
+
+document.getElementById("ratingInfo").innerHTML=
+"<b>Clinical plausibility</b><br>"+
+"1 = Not plausible<br>"+
+"2 = Poor<br>"+
+"3 = Good<br>"+
+"4 = Excellent<br><br>"+
+
+"<b>Anatomical cleanliness</b><br>"+
+"1 = Many false fibers<br>"+
+"2 = Several false fibers<br>"+
+"3 = Few false fibers<br>"+
+"4 = Clean bundle<br><br>"+
+
+"<b>Anatomical completeness</b><br>"+
+"1 = Many streamlines missing<br>"+
+"2 = Some missing<br>"+
+"3 = Mostly complete<br>"+
+"4 = Complete anatomy";
+
 }
 
 showSlide(currentSlide);
 
 </script>
+
 </body>
 </html>
