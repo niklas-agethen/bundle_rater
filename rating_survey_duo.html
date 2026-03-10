@@ -869,7 +869,6 @@ Each screen requires <b>6 ratings</b>:
 <div class="progress" id="progress"></div>
 
 <div class="rating-area">
-
 <div class="button-block">
 
 <b>Overall Impression</b><br>
@@ -1003,7 +1002,7 @@ document.getElementById("progress").textContent=
 "Screen "+(index+1)+" / "+totalSlides+
 " — rating "+activeRegion+" bundle";
 
-updateInfo();
+clearButtonHighlight();
 updateButtonHighlight();
 
 }
@@ -1020,6 +1019,12 @@ checkFinished();
 
 saveState();
 
+}
+
+function clearButtonHighlight(){
+document.querySelectorAll(".rating-row button").forEach(function(btn){
+btn.classList.remove("selected");
+});
 }
 
 function updateButtonHighlight(){
@@ -1136,23 +1141,6 @@ var link=document.createElement("a");
 link.href=URL.createObjectURL(blob);
 link.download=final?"ratings_final.csv":"ratings_interim.csv";
 link.click();
-
-}
-
-function updateInfo(){
-
-document.getElementById("ratingInfo").innerHTML=
-"<b>Clinical plausibility</b><br>"+
-"1 = Excellent / fully plausible<br>"+
-"5 = Not plausible<br><br>"+
-
-"<b>Anatomical cleanliness</b><br>"+
-"1 = Clean bundle<br>"+
-"5 = Noisy bundle<br><br>"+
-
-"<b>Anatomical completeness</b><br>"+
-"1 = Complete bundle<br>"+
-"5 = Severely incomplete bundle";
 
 }
 
